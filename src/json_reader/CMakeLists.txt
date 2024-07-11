@@ -1,0 +1,1 @@
+add_library(json_reader json_reader.cpp multi_json_reader.cpp)

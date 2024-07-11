@@ -1,0 +1,1 @@
+add_library(crypto_market_data crypto.cpp market_data_fetcher.cpp)

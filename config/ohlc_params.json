@@ -1,0 +1,5 @@
+{
+    "step" : "86400", 
+    "limit" : "1000", 
+    "exclude_current_candle" : "false"
+}
