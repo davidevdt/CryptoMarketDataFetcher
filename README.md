@@ -1,5 +1,5 @@
 # CryptoMarketDataFetcher
-A C++ system that allows fetching and downloading the latest crypto market and candlestick data. 
+### A C++ system that allows fetching and downloading the latest crypto market and candlestick data. 
 
 This is a C++ program developed from scratch, that allows fetching real-time the latest crypto market data. 
 
@@ -16,7 +16,7 @@ Importantly, this system was created for recreational purposes only, and was by 
 The `src` folder contains four modules:
 * `utils`, which contains methods for the conversion of hash tables into strings, strings into tabular and csv formats, file export, etc.
 * `json_reader`, which contains two classes that parse strings defining json objects, and convert them into hash tables (`std::unordered_map` in the standard library): one class parses simple json objects, while the other parses vectors of json objects. 
-* `api`, which contains the Api interface (`api.h`), which declares methods for fetching the data from the exchange; concrete implementations of this abstract class are exchange-dependent. This folder also contains an example of such implementation, where I implement the class using the public Bitstamp exchange Api ("https://www.bitstamp.net/api/"). The `web_requests.h` file contains the class responsible for performing the actual web requests. Notice that these are RESTful (and not socket) requests.
+* `api`, which contains the Api interface (`api.h`), which declares methods for fetching the data from the exchange; concrete implementations of this abstract class are exchange-dependent. This folder also contains an example of such implementation, where I implement the class using the public Bitstamp exchange Api (<https://www.bitstamp.net/api/>). The `web_requests.h` file contains the class responsible for performing the actual web requests. Notice that these are RESTful (and not socket) requests.
 * `crypto_market_data` contains an example of how the Api class could be used: `crypto.h` defines a class responsible for fetching the data of a specific crypto asset, while `market_data_fetcher.h` fetches such data for multiple crypto asset simultaneously, through multi-threading. 
 
 The files `marketDataFetcher.cpp`, `candlestickDataFetcher.cpp`, and `candlestickDataDownloader.cpp` in the `src` folder contain the source code of the executables. Of course, these (and the `crypto_market_data` folder) are possible examples of how the functionalities of the Api interface can be used. 
