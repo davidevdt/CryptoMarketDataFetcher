@@ -6,20 +6,20 @@ This is a C++ program developed from scratch, that allows fetching real-time the
 In particular, the program allows performing three operations:
 * fetching and displaying real-time updates of the latest crypto market data, which include price, volume, 24h % change, and more.
 * fetching and displaying real-time updates of the latest candlestick data (the last 1000 daily data points by default).
-* downloading and printing on screen the last candlestick data, saving it in CSV format within the `./data` folder
+* downloading and displaying the latest candlestick data, saving it in CSV format within the `./data` folder
 
 The software does not make use of third party libraries, except for the C++ standard library (standard `C++11`). It is written to run on Linux/Unix systems, and it only requires having `curl` installed on the host machine. For the development, I have used `curl 8.8.0`.  
 
 Importantly, this system was created for recreational purposes only, and was by no means devised for trading (especially short-term and high-frequency trading). 
 
-## Architecture overview
+## Program overview
 The `src` folder contains four modules:
-* `utils`, which contains methods for the conversion of hash table into strings, of strings into tabular and csv formats, file export, etc.
-* `json_reader`, which contains two classes that parse strings containing json objects and convert them into hash tables (`std::unordered_map` in the standard library): one class parses simple json objects, while the other parses vectors of json objects. 
-* `api`, which contains the Api interface (`api.h`), which declares methods for fetching the data from the exchange; concrete implementations of this abstract class are exchange-dependent. This folder also contains an example of such implementation, where I implement the class using the public Bitstamp exchange Api (<"https://www.bitstamp.net/api/">). The `web_requests.h` file contains the class responsible for performing the actual web requests. Notice that these are RESTful (and not socket) requests.
+* `utils`, which contains methods for the conversion of hash tables into strings, strings into tabular and csv formats, file export, etc.
+* `json_reader`, which contains two classes that parse strings defining json objects, and convert them into hash tables (`std::unordered_map` in the standard library): one class parses simple json objects, while the other parses vectors of json objects. 
+* `api`, which contains the Api interface (`api.h`), which declares methods for fetching the data from the exchange; concrete implementations of this abstract class are exchange-dependent. This folder also contains an example of such implementation, where I implement the class using the public Bitstamp exchange Api ("https://www.bitstamp.net/api/"). The `web_requests.h` file contains the class responsible for performing the actual web requests. Notice that these are RESTful (and not socket) requests.
 * `crypto_market_data` contains an example of how the Api class could be used: `crypto.h` defines a class responsible for fetching the data of a specific crypto asset, while `market_data_fetcher.h` fetches such data for multiple crypto asset simultaneously, through multi-threading. 
 
-The files `marketDataFetcher.cpp`, `candlestickDataFetcher.cpp`, and `candlestickDataDownloader.cpp` in the `src` folder contain the source code for the executables. Of course, these (and the `crypto_market_data` folder) are only examples of how the functionalities of the Api interface can be used. 
+The files `marketDataFetcher.cpp`, `candlestickDataFetcher.cpp`, and `candlestickDataDownloader.cpp` in the `src` folder contain the source code of the executables. Of course, these (and the `crypto_market_data` folder) are possible examples of how the functionalities of the Api interface can be used. 
 
 The Api interface can be easily extended for use with any exchange; it suffices to override its method and adapt them to the specific exchange Api. 
 
@@ -39,11 +39,11 @@ The executables will be placed in the `bin` folder. To run, for example, marketD
 See the source file for more information about the parameters that can be given when launching the program. 
 
 ## Changing the crypto names and other options
-In the `config` folder, the file `crypto_names.cpp` contains the tickers of the cryptos whose information is being fetched by the program. More crypto can be added, as long as they comply with the tickers included in the Bitstamp Api. It is possible to use also crypto included in other exchanges, of course, but then the `api.h` interface needs to be implemented by a new concrete class which adheres to the exhcange's Api standard. 
+In the `config` folder, the file `crypto_names.cpp` contains the tickers of the cryptos whose information is being fetched by the program. More crypto can be added, as long as they comply with the tickers included in the Bitstamp Api. It is possible to use also crypto included in other exchanges, of course, but in this case the `api.h` interface needs to be implemented by a new concrete class which adheres to the exhcange's Api standard. 
 
 In the same folder, the `ohlc_params.json` file is used for the specification of the arguments in the Api request for the candlestick data (in this case, for the Bitstamp exchange: <https://www.bitstamp.net/api/#tag/Market-info/operation/GetOHLCData>). 
 
-The system can also use files located in different locations, in which case the file paths must be specified when launching the programs (see the comments in the source code). 
+The system can also use files located in different paths, in which case the paths must be specified when launching the programs (see comments in the source code). 
 
 ## Output Examples
 The `marketDataFetcher` program will present an output similar to the following: 
@@ -74,7 +74,7 @@ DOGE/USD_volume,DOGE/USD_close,DOGE/USD_high,DOGE/USD_low,DOGE/USD_open,DOGE/USD
 32372.24,0.07124,0.07262,0.07066,0.07262,2022-12-28 00:00:00
 ```
 
-and the same information will be printed on screen in tabular format. The program `candlestickDataFetcher` will output the same information, but it will keep refreshing the data (by default, every 5 seconds). 
+and the same information will be printed on screen in a tabular format. The program `candlestickDataFetcher` will output the same information, but it will keep refreshing the data (by default, every 5 seconds). 
 
 ## Terminating the program
 To terminate `marketDataFetcher` and `candlestickDataFetcher`, simply press `Ctrl+C`. `candlestickDataDownloader` terminates automatically. 
